@@ -4,7 +4,6 @@ import { Copy, AlertTriangle, Info } from 'lucide-react';
 export default function PaymentDetails() {
     return (
         <div className="min-h-screen bg-zinc-100">
-            <PaymentHeader />
             <div className="flex items-center justify-center bg-gray-100 px-8 py-10">
                 <div className="bg-white max-w-[600px] p-8">
                     {/* Title */}

@@ -1,6 +1,5 @@
 // app/page.tsx
 "use client";
-
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
@@ -9,7 +8,7 @@ export default function Home() {
 
   useEffect(() => {
     router.replace("/card");
-  }, [router]);
+  }, []);
 
   return null;
 }
