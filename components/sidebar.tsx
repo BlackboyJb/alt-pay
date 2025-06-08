@@ -1,40 +1,112 @@
-'use client';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import clsx from 'clsx';
-import { X, CreditCard, RefreshCcw, Wallet, House, Repeat } from 'lucide-react';
-import React, { useState } from 'react';
+"use client";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { X } from "lucide-react";
+import React, { useState } from "react";
 
 const methods = [
     {
-        name: 'Pay with Card',
-        path: '/card',
-        description: 'Enter card details to make full payment',
-        icon: <CreditCard className="w-5 h-5" />,
+        name: "Pay with Card",
+        path: "/card",
+        description: "Enter card details to make full payment",
+        icon: (
+            <svg
+                width="24"
+                height="30"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <g clip-path="url(#clip0_834_3682)">
+                    <path
+                        d="M3 3H21C21.2652 3 21.5196 3.10536 21.7071 3.29289C21.8946 3.48043 22 3.73478 22 4V20C22 20.2652 21.8946 20.5196 21.7071 20.7071C21.5196 20.8946 21.2652 21 21 21H3C2.73478 21 2.48043 20.8946 2.29289 20.7071C2.10536 20.5196 2 20.2652 2 20V4C2 3.73478 2.10536 3.48043 2.29289 3.29289C2.48043 3.10536 2.73478 3 3 3ZM20 11H4V19H20V11ZM20 9V5H4V9H20ZM14 15H18V17H14V15Z"
+                        fill="black"
+                    />
+                </g>
+            </svg>
+        ),
     },
     {
-        name: 'Pay with Bank Transfer',
-        path: '/transfer',
-        description: 'Get bank details to make full payment',
-        icon: <House className="w-5 h-5" />,
+        name: "Pay with Bank Transfer",
+        path: "/transfer",
+        description: "Get bank details to make full payment",
+        icon: (
+            <svg
+                width="32"
+                height="32"
+                viewBox="0 0 32 32"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <g clip-path="url(#clip0_834_4014)">
+                    <path
+                        d="M6 24H26V26H6V24ZM8 16H10V23H8V16ZM13 16H15V23H13V16ZM17 16H19V23H17V16ZM22 16H24V23H22V16ZM6 11L16 6L26 11V15H6V11ZM8 12.236V13H24V12.236L16 8.236L8 12.236ZM16 12C15.7348 12 15.4804 11.8946 15.2929 11.7071C15.1054 11.5196 15 11.2652 15 11C15 10.7348 15.1054 10.4804 15.2929 10.2929C15.4804 10.1054 15.7348 10 16 10C16.2652 10 16.5196 10.1054 16.7071 10.2929C16.8946 10.4804 17 10.7348 17 11C17 11.2652 16.8946 11.5196 16.7071 11.7071C16.5196 11.8946 16.2652 12 16 12Z"
+                        fill="black"
+                    />
+                </g>
+            </svg>
+        ),
     },
     {
-        name: 'Recurring Payment',
-        path: '/recurring',
-        description: 'Tokenize card for recurring payment',
-        icon: <RefreshCcw className="w-5 h-5" />,
+        name: "Recurring Payment",
+        path: "/recurring",
+        description: "Tokenize card for recurring payment",
+        icon: (
+            <svg
+                width="32"
+                height="32"
+                viewBox="0 0 32 32"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <g clip-path="url(#clip0_834_7659)">
+                    <path
+                        d="M9.463 8.43301C11.2776 6.86067 13.599 5.99666 16 6.00001C21.523 6.00001 26 10.477 26 16C26 18.136 25.33 20.116 24.19 21.74L21 16H24C24.0001 14.4316 23.5392 12.8978 22.6747 11.5893C21.8101 10.2807 20.5799 9.25517 19.1372 8.64013C17.6944 8.0251 16.1027 7.84771 14.56 8.13003C13.0172 8.41234 11.5915 9.14191 10.46 10.228L9.463 8.43301ZM22.537 23.567C20.7224 25.1393 18.401 26.0034 16 26C10.477 26 6 21.523 6 16C6 13.864 6.67 11.884 7.81 10.26L11 16H8C7.99987 17.5684 8.46075 19.1022 9.32534 20.4108C10.1899 21.7193 11.4201 22.7449 12.8628 23.3599C14.3056 23.9749 15.8973 24.1523 17.44 23.87C18.9828 23.5877 20.4085 22.8581 21.54 21.772L22.537 23.567Z"
+                        fill="black"
+                    />
+                </g>
+            </svg>
+        ),
     },
     {
-        name: 'Pay with Credit',
-        path: '/credit',
-        description: 'Applicable to AltBank accounts only.',
-        icon: <Wallet className="w-5 h-5" />,
+        name: "Pay with Credit",
+        path: "/credit",
+        description: "Applicable to AltBank accounts only.",
+        icon: (
+            <svg
+                width="32"
+                height="32"
+                viewBox="0 0 32 32"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <g clip-path="url(#clip0_834_4595)">
+                    <path
+                        d="M16 8C22.075 8 27 10.686 27 14V18C27 21.314 22.075 24 16 24C10.033 24 5.176 21.409 5.005 18.177L5 18V14C5 10.686 9.925 8 16 8ZM16 20C12.28 20 8.99 18.993 7 17.45V18C7 19.882 10.883 22 16 22C21.01 22 24.838 19.97 24.995 18.118L25 18L25.001 17.45C23.011 18.992 19.721 20 16 20ZM16 10C10.883 10 7 12.118 7 14C7 15.882 10.883 18 16 18C21.117 18 25 15.882 25 14C25 12.118 21.117 10 16 10Z"
+                        fill="black"
+                    />
+                </g>
+            </svg>
+        ),
     },
     {
-        name: 'Pay in Instalment',
-        path: '/installment',
-        description: 'Make instalment payments',
-        icon: <Repeat className="w-5 h-5" />,
+        name: "Pay in Instalment",
+        path: "/installment",
+        description: "Make instalment payments",
+        icon: (
+            <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    d="M11.9508 7.95L10.5368 9.364L8.00078 6.828V20H6.00078V6.828L3.46578 9.364L2.05078 7.95L7.00078 3L11.9508 7.95ZM21.9508 16.05L17.0008 21L12.0508 16.05L13.4648 14.636L16.0018 17.172L16.0008 4H18.0008V17.172L20.5368 14.636L21.9508 16.05Z"
+                    fill="black"
+                />
+            </svg>
+        ),
     },
 ];
 
@@ -50,48 +122,119 @@ const Sidebar = ({ onClose }: { onClose?: () => void }) => {
     const handleDismissModal = () => setShowModal(false);
 
     return (
-        <section className="w-[400px] bg-white">
-            <div className='w-full flex justify-end p-6'>
-                <button onClick={handleCancelClick} aria-label="Close">
-                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 1.00005L1 13M0.999949 1L12.9999 13" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /></svg>
+        <section className="w-full md:w-[500px] bg-white">
+            <div className="w-full md:w-[400px] flex justify-end p-10">
+                <div className="md:hidden flex items-center justify-center text-black pr-30">
+                    <h1 className="text-[20px]">Payment</h1>
+                </div>
+                <button onClick={handleCancelClick} aria-label="Close" className="hidden lg:block">
+                    <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 14 14"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            d="M13 1.00005L1 13M0.999949 1L12.9999 13"
+                            stroke="black"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+                    </svg>
                 </button>
             </div>
 
+            <div className="sm:hidden flex items-center justify-center gap-3 pr-10">
+                <div className="w-8 h-8 rounded-full  flex items-center justify-center text-white text-sm font-bold">
+                    <svg width="26" height="32" viewBox="0 0 26 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4.49379 14.1541L0.577026 18.0047L3.21622 13.1638L8.39181 6.23446L11.6167 5.06934L4.49379 14.1541Z" fill="#592FFF" />
+                        <path d="M4.48096 20.7049L0.26123 24.8724L3.15596 19.7734L15.0274 3.8373L18.7122 2.50586L4.48096 20.7049Z" fill="#592FFF" />
+                        <path d="M7.77205 23.0178L1.83508 29.3487L6.36294 22.0287L21.7783 1.39781L25.7143 0L7.77205 23.0178Z" fill="#592FFF" />
+                        <path d="M25.739 6.45138L11.024 25.3037L5.01941 31.7253L9.61443 24.3133L25.739 2.73047V6.45138Z" fill="#592FFF" />
+                        <path d="M25.7387 12.8131L14.2345 27.5604L9.80811 32.0002L12.9029 26.6248L25.7387 9.37988V12.8131Z" fill="#592FFF" />
+                        <path d="M25.7386 19.1356L20.404 25.951L16.4503 29.8286L19.1132 24.9935L25.7386 16.1035V19.1356Z" fill="#592FFF" />
+                    </svg>
+
+                </div>
+                <div>
+                    <p className="text-lg font-semibold text-zinc-900">₦100,000.00</p>
+                    <p className="text-xs text-gray-500">Transaction Amount</p>
+                </div>
+            </div>
+
             {/* Header */}
-            <div className="mt-4 px-6 ">
-                <div className="text-3xl font-bold text-purple-700 flex items-center justify-center gap-2 mb-2">
+            <div className="mt-4 px-6 md:w-[400px] ">
+                <div className=" hidden lg:flex text-3xl font-bold text-purple-700  items-center justify-center gap-2 mb-2 ">
                     <div className="w-5 h-5 bg-[url('/altpay-logo.svg')] bg-contain bg-no-repeat" />
                     <span className="text-black font-semibold">
                         alt<span className="text-purple-700">pay</span>
                     </span>
                 </div>
-                <p className="text-xs text-gray-600 font-light text-center">Select Payment Method</p>
+                <p className="text-xs text-black font-light text-center lg:hidden ">
+                    How would you like to Proceed?
+                </p>
+                <p className="text-xs text-gray-600 font-light text-center sm:block hidden">
+                    Select Payment Method
+                </p>
             </div>
 
-            <ul className='flex flex-col mt-6'>
-                {
-                    methods.map(({ name, path, description, icon }) => {
-                        const isActive = pathname.startsWith(path);
+            <ul className="flex flex-col mt-6 md:w-[400px]">
+                {methods.map(({ name, path, description, icon }) => {
+                    const isActive = pathname.startsWith(path);
 
-                        return (
-                            <Link key={path} href={path}>
-                                <li className={`w-full flex items-start gap-4 px-4 py-5 ${isActive ? ' bg-[#f3ecff] border-l-4 border-l-[#592FFF] border-y border-y-[#E6E6E6] ' : ' hover:bg-gray-50 '}`}>
-                                    <div className="text-purple-700">{icon}</div>
-                                    <div className="">
-                                        <h4 className={`font-semibold text-[16px] ${isActive ? ' text-indigo-700 ' : ' text-black '}`}>
+                    return (
+                        <Link
+                            key={path}
+                            href={path}
+                            onClick={() => {
+                                if (onClose) onClose();
+                            }}
+                        >
+                            <li
+                                className={`w-full flex items-start gap-4 px-4 py-5 border-y border-y-[#E6E6E6] ${isActive
+                                    ? "sm:bg-[#f3ecff] sm:border-l-4 border-l-[#592FFF]"
+                                    : "hover:bg-gray-50"
+                                    }`}
+                            >
+                                <div>{icon}</div>
+                                <div className="flex items-center justify-between w-full">
+                                    <div>
+                                        <h4
+                                            className={`font-semibold text-[16px] ${isActive
+                                                ? "text-black sm:text-indigo-700"
+                                                : "text-black"
+                                                }`}
+                                        >
                                             {name}
                                         </h4>
                                         <p className="text-sm text-gray-500 leading-[20px]">
                                             {description}
                                         </p>
                                     </div>
-                                </li>
-                            </Link>
-                        );
-                    })
-                }
+                                    <svg
+                                        className="mr-2 sm:hidden"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            d="M9 18L15 12L9 6"
+                                            stroke="#000000"
+                                            strokeWidth="2"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                        />
+                                    </svg>
+                                </div>
+                            </li>
+                        </Link>
+                    );
+                })}
             </ul>
-
 
             {/* Modal */}
             {showModal && (
@@ -104,8 +247,12 @@ const Sidebar = ({ onClose }: { onClose?: () => void }) => {
                         >
                             <X className="w-5 h-5" />
                         </button>
-                        <h3 className="text-xl font-semibold text-gray-900 mb-2 text-center">Cancel Payment</h3>
-                        <p className="text-sm text-gray-500 mb-6 text-center">You are about to cancel this payment.</p>
+                        <h3 className="text-xl font-semibold text-gray-900 mb-2 text-center">
+                            Cancel Payment
+                        </h3>
+                        <p className="text-sm text-gray-500 mb-6 text-center">
+                            You are about to cancel this payment.
+                        </p>
                         <div className="flex justify-center space-x-4">
                             <button
                                 className="flex-1 py-2 border border-indigo-600 text-gray-700 font-semibold rounded-md"
@@ -121,12 +268,12 @@ const Sidebar = ({ onClose }: { onClose?: () => void }) => {
                             </button>
                         </div>
                         <p className="text-1xl text-center text-gray-400 mt-6">
-                            Powered by <span className="text-indigo-600 font-semibold">altpay</span>
+                            Powered by{" "}
+                            <span className="text-indigo-600 font-semibold">altpay</span>
                         </p>
                     </div>
                 </div>
-            )
-            }
+            )}
         </section>
     );
 };
